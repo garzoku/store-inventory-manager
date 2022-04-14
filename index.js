@@ -4,7 +4,9 @@ $app.innerHTML = `
                 <table>
                 <thead>
                     <tr>
-                        <th colspan="3">Store Inventory Manager</th>
+                        <th colspan="3">
+                        <div id="interface"></div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -17,7 +19,37 @@ $app.innerHTML = `
             </table>
 `
 $main.append($app)
+addInterface()
 
 function addItem() {
+    const $tBody = document.querySelector("tbody")
 
+    const $tRow = document.createElement("tr")
+    $tRow.innerHTML = `
+        <tr>
+            <td>Item Name</td>
+            <td>Item Sell In</td>
+            <td>Item Quality</td>
+        </tr>
+    `
+
+}
+
+function addInterface() {
+    const $interface = document.querySelector("#interface")
+    const $form = document.createElement("form")
+    $form.innerHTML = `
+            <label for="item">Select Item</label>
+            <select name="item">
+                <option value="">+5 Dexterity Vest</option>
+                <option value="">Aged Brie</option>
+                <option value="">Elixir of the Mongoose</option>
+                <option value="">Sulfuras, Hand of Ragnaros</option>
+                <option value="">Backstage passes to a TAFKAL80ETC concert</option>
+                <option value="">Conjured Mana Cake</option>
+                <option value="">+5 Dexterity Vest</option>
+            </select>
+            <input type="submit" value="Add Item">
+    `
+    $interface.append($form)
 }

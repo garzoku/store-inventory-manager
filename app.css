@@ -5,10 +5,15 @@ main {
 #app {
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
     margin: auto;
     border-radius: 3px;
     padding: 4px 4px
+}
+
+#interface {
+    margin: 10px;
 }
 
 table {
