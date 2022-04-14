@@ -1,0 +1,48 @@
+main {
+    display: flex;
+}
+
+#app {
+
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    border-radius: 3px;
+    padding: 4px 4px
+}
+
+table {
+    border-collapse: collapse;
+    border: 2px solid rgb(200, 200, 200);
+    letter-spacing: 1px;
+    font-family: sans-serif;
+    font-size: .8em;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+
+}
+
+td,
+th {
+    padding: 10px;
+}
+
+tbody>tr:nth-child(1) {
+    font-weight: 700;
+}
+
+tr:nth-child(2n+2) {
+    background-color: hsl(0, 0%, 89%);
+}
+
+td {
+    text-align: center;
+}
+
+tbody>tr td:nth-child(1) {
+    min-width: 100px;
+}

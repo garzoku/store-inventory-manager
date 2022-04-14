@@ -17,3 +17,7 @@ $app.innerHTML = `
             </table>
 `
 $main.append($app)
+
+function addItem() {
+
+}
