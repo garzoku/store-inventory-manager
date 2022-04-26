@@ -1,3 +1,18 @@
+const items = [
+    { name: "+5 Dexterity Vest", attributes: { sell_in: "10", quality: "20" }, },
+    { name: "Aged Brie", attributes: { sell_in: "2", quality: "0" }, },
+    { name: "Elixir of the Mongoose", attributes: { sell_in: "5", quality: "7" }, },
+    { name: "Sulfuras, Hand of Ragnaros", attributes: { sell_in: "0", quality: "80" }, },
+    { name: "Backstage passes tp a TAFKAL80ETC concert", attributes: { sell_in: "15", quality: "20" }, },
+    { name: "Conjured Mana Cake", attributes: { sell_in: "3", quality: "6" }, },
+]
+
+
+
+
+
+
+
 const $main = document.querySelector("main")
 const $app = document.querySelector("#app")
 $app.innerHTML = `
@@ -32,7 +47,7 @@ function addItem() {
             <td>Item Quality</td>
         </tr>
     `
-
+    $tBody.append($tRow)
 }
 
 function addInterface() {
