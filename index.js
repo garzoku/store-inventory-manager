@@ -1,10 +1,10 @@
 const items = [
-    { name: "+5 Dexterity Vest", sell_in: "10", quality: "20", id: "0" },
-    { name: "Aged Brie", sell_in: "2", quality: "0", id: "1" },
-    { name: "Elixir of the Mongoose", sell_in: "5", quality: "7", id: "2" },
-    { name: "Sulfuras, Hand of Ragnaros", sell_in: "0", quality: "80", id: "3" },
-    { name: "Backstage passes to a TAFKAL80ETC concert", sell_in: "15", quality: "20", id: "4" },
-    { name: "Conjured Mana Cake", sell_in: "3", quality: "6", id: "5" },
+    { name: "+5 Dexterity Vest", sell_in: 10, quality: 20, id: "0" },
+    { name: "Aged Brie", sell_in: 2, quality: 0, id: "1" },
+    { name: "Elixir of the Mongoose", sell_in: 5, quality: 7, id: "2" },
+    { name: "Sulfuras, Hand of Ragnaros", sell_in: 0, quality: 80, id: "3" },
+    { name: "Backstage passes to a TAFKAL80ETC concert", sell_in: 15, quality: 20, id: "4" },
+    { name: "Conjured Mana Cake", sell_in: 3, quality: 6, id: "5" },
 ]
 
 const inventoryItems = []
@@ -55,7 +55,6 @@ function addItemToList(item) {
 function saveItem(item) {
     addItemToList(item)
     updateLocalStorage()
-
 }
 
 function updateLocalStorage() {
@@ -70,8 +69,6 @@ function updateLocalStorage() {
         localStorage.setItem("items", itemsJSON)
     }
 }
-
-
 
 function refreshItems() {
     const savedInventory = localStorage.getItem("items")
@@ -105,6 +102,7 @@ function addInterface() {
             </select>
             <input type="submit" value="Add Item" name="selection">
             <input type="reset" value="Delete Inventory">
+            <input type="button" value="EOD" id="eod">
     `
     addOptions(items, $form)
     $interface.append($form)
@@ -131,12 +129,96 @@ function addListeners($form) {
         localStorage.clear()
         window.location.reload()
     })
+    $form.querySelector("#eod").addEventListener("click", (event) => {
+        eodCalculate()
+        window.location.reload()
+    })
+
 }
 
-function degradeItemQuality() {
+function reduceItem(item) {
+    item.sell_in = item.sell_in - 1
+    console.log(item.name.includes("Conjured"))
+    if (!item.name.includes("conjured") && !item.name.includes("Conjured")) {
+        if (item.sell_in < 0 && item.quality > 0) {
+            item.quality = item.quality - 2
+        } else if (item.quality > 0 && item.quality < 50) {
+            item.quality = item.quality - 1
+        }
+    } else {
+        if (item.sell_in < 0 && item.quality > 0) {
+            item.quality = item.quality - 4
+        } else if (item.quality > 0) {
+            item.quality = item.quality - 2
+        }
+    }
+}
+
+function reduceSpecialItem(item) {
+    switch (item.id) {
+        case "1":
+            item.sell_in = item.sell_in - 1
+            if (item.quality < 50) {
+                item.quality = item.quality + 1
+            }
+            break;
+        case "4":
+            item.sell_in = item.sell_in - 1
+            if (item.sell_in <= 10 && item.sell_in > 5 && item.quality <= 48) {
+                item.quality = item.quality + 2
+            } else if (item.sell_in <= 5 && item.sell_in >= 0 && item.quality <= 47) {
+                item.quality = item.quality + 3
+            } else if (item.sell_in < 0) {
+                item.quality = item.quality * 0
+            } else {
+                item.quality = item.quality + 1
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+function eodCalculate() {
+    const savedInventory = localStorage.getItem("items")
+    const parsedInventory = JSON.parse(savedInventory)
+    // go through inventory master list and apply changes to each item
+    parsedInventory.forEach(item => {
+        switch (item.id) {
+            case "0":
+                reduceItem(item)
+                break;
+            case "1":
+                reduceSpecialItem(item)
+                break;
+
+            case "2":
+                reduceItem(item)
+                break;
+
+            case "3":
+
+                break;
+
+            case "4":
+                reduceSpecialItem(item)
+                break;
+
+            case "5":
+                reduceItem(item)
+                break;
+
+
+            default:
+                break;
+        }
+        eodUpdateLocalStorage(parsedInventory)
+        refreshItems()
+    })
 
 }
 
-function reduceSellIn(items) {
-
+function eodUpdateLocalStorage(inventory) {
+    const itemsJSON = JSON.stringify(inventory)
+    localStorage.setItem("items", itemsJSON)
 }
