@@ -1,15 +1,14 @@
 const items = [
-    { name: "+5 Dexterity Vest", sell_in: "10", quality: "20" },
-    { name: "Aged Brie", sell_in: "2", quality: "0" },
-    { name: "Elixir of the Mongoose", sell_in: "5", quality: "7" },
-    { name: "Sulfuras, Hand of Ragnaros", sell_in: "0", quality: "80" },
-    { name: "Backstage passes to a TAFKAL80ETC concert", sell_in: "15", quality: "20" },
-    { name: "Conjured Mana Cake", sell_in: "3", quality: "6" },
+    { name: "+5 Dexterity Vest", sell_in: "10", quality: "20", id: "0" },
+    { name: "Aged Brie", sell_in: "2", quality: "0", id: "1" },
+    { name: "Elixir of the Mongoose", sell_in: "5", quality: "7", id: "2" },
+    { name: "Sulfuras, Hand of Ragnaros", sell_in: "0", quality: "80", id: "3" },
+    { name: "Backstage passes to a TAFKAL80ETC concert", sell_in: "15", quality: "20", id: "4" },
+    { name: "Conjured Mana Cake", sell_in: "3", quality: "6", id: "5" },
 ]
 
 const inventoryItems = []
 
-//localStorage.clear()
 createTable()
 addInterface()
 refreshItems()
@@ -38,8 +37,7 @@ function createTable() {
     $main.append($app)
 }
 
-function saveItem(item) {
-    let spreadInventory = []
+function addItemToList(item) {
     let selectedItem = item.get("item")
     items.forEach(masterItem => {
         if (masterItem.name === selectedItem) {
@@ -47,22 +45,32 @@ function saveItem(item) {
                 name: masterItem.name,
                 sell_in: masterItem.sell_in,
                 quality: masterItem.quality,
+                id: masterItem.id,
             }
             inventoryItems.push(inventoryItem)
-
-            if (localStorage.length > 0) {
-                const savedInventory = localStorage.getItem("items")
-                const parsedInventory = JSON.parse(savedInventory)
-                spreadInventory = [...parsedInventory, ...inventoryItems]
-                const itemsJSON = JSON.stringify(spreadInventory)
-                localStorage.setItem("items", itemsJSON)
-            } else {
-                const itemsJSON = JSON.stringify(inventoryItems)
-                localStorage.setItem("items", itemsJSON)
-            }
         }
     })
 }
+
+function saveItem(item) {
+    addItemToList(item)
+    updateLocalStorage()
+
+}
+
+function updateLocalStorage() {
+    if (localStorage.length > 0) {
+        const savedInventory = localStorage.getItem("items")
+        const parsedInventory = JSON.parse(savedInventory)
+        let spreadInventory = [...parsedInventory, ...inventoryItems]
+        const itemsJSON = JSON.stringify(spreadInventory)
+        localStorage.setItem("items", itemsJSON)
+    } else {
+        const itemsJSON = JSON.stringify(inventoryItems)
+        localStorage.setItem("items", itemsJSON)
+    }
+}
+
 
 
 function refreshItems() {
@@ -96,10 +104,11 @@ function addInterface() {
 
             </select>
             <input type="submit" value="Add Item" name="selection">
+            <input type="reset" value="Delete Inventory">
     `
     addOptions(items, $form)
     $interface.append($form)
-    addButtonListener($form)
+    addListeners($form)
 }
 
 function addOptions(items, $form) {
@@ -111,10 +120,16 @@ function addOptions(items, $form) {
     })
 }
 
-function addButtonListener($form) {
+function addListeners($form) {
     $form.addEventListener("submit", (event) => {
         let formData = new FormData(event.currentTarget)
         saveItem(formData)
+    })
+
+    $form.addEventListener("reset", (event) => {
+        console.log("click")
+        localStorage.clear()
+        window.location.reload()
     })
 }
 
