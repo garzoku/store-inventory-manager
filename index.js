@@ -123,7 +123,6 @@ function addListeners($form) {
         let formData = new FormData(event.currentTarget)
         saveItem(formData)
     })
-
     $form.addEventListener("reset", (event) => {
         console.log("click")
         localStorage.clear()
@@ -133,7 +132,6 @@ function addListeners($form) {
         eodCalculate()
         window.location.reload()
     })
-
 }
 
 function reduceItem(item) {
@@ -191,31 +189,23 @@ function eodCalculate() {
             case "1":
                 reduceSpecialItem(item)
                 break;
-
             case "2":
                 reduceItem(item)
                 break;
-
             case "3":
-
                 break;
-
             case "4":
                 reduceSpecialItem(item)
                 break;
-
             case "5":
                 reduceItem(item)
                 break;
-
-
             default:
                 break;
         }
         eodUpdateLocalStorage(parsedInventory)
         refreshItems()
     })
-
 }
 
 function eodUpdateLocalStorage(inventory) {
