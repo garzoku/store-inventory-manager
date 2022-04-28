@@ -1,10 +1,10 @@
 const items = [
     { name: "+5 Dexterity Vest", sell_in: 10, quality: 20, id: "0" },
     { name: "Aged Brie", sell_in: 10, quality: 0, id: "1" },
-    { name: "Elixir of the Mongoose", sell_in: 10, quality: 7, id: "2" },
+    { name: "Elixir of the Mongoose", sell_in: 10, quality: 20, id: "2" },
     { name: "Sulfuras, Hand of Ragnaros", sell_in: 10, quality: 80, id: "3" },
     { name: "Backstage passes to a TAFKAL80ETC concert", sell_in: 15, quality: 20, id: "4" },
-    { name: "Conjured Mana Cake", sell_in: 10, quality: 6, id: "5" },
+    { name: "Conjured Mana Cake", sell_in: 10, quality: 20, id: "5" },
 ]
 
 const inventoryItems = []
