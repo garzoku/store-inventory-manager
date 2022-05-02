@@ -20,7 +20,7 @@ function createTable() {
                 <table>
                 <thead>
                     <tr>
-                        <th colspan="3">
+                        <th colspan="4">
                         <div id="interface"></div>
                         </th>
                     </tr>
@@ -30,6 +30,7 @@ function createTable() {
                         <td>Item</td>
                         <td>Sell In</td>
                         <td>Quality</td>
+                        <td>Date of Entry</td>
                     </tr>
                 </tbody>
             </table>
@@ -39,17 +40,16 @@ function createTable() {
 
 function addItemToList(item) {
     let selectedItem = item.get("item")
-    items.forEach(masterItem => {
-        if (masterItem.name === selectedItem) {
-            const inventoryItem = {
-                name: masterItem.name,
-                sell_in: masterItem.sell_in,
-                quality: masterItem.quality,
-                id: masterItem.id,
-            }
-            inventoryItems.push(inventoryItem)
-        }
-    })
+    let selectedDate = item.get("date")
+    let selectedQuality = item.get("quality")
+    let selectedSell_in = item.get("sell_in")
+    const inventoryItem = {
+        name: selectedItem,
+        sell_in: selectedSell_in,
+        quality: selectedQuality,
+        date: selectedDate,
+    }
+    inventoryItems.push(inventoryItem)
 }
 
 function saveItem(item) {
@@ -83,6 +83,7 @@ function refreshItems() {
             <td>${savedItem.name}</td>
             <td>${savedItem.sell_in}</td>
             <td>${savedItem.quality}</td>
+            <td>${savedItem.date}</td>
         </tr>
     `
             $tBody.append($tRow)
@@ -96,26 +97,20 @@ function addInterface() {
     const $form = document.createElement("form")
     $form.id = "item-selection"
     $form.innerHTML = `
-            <label for="item">Select Item</label>
-            <select name="item">
-
-            </select>
-            <input type="submit" value="Add Item" name="selection">
+            <label for="item">Enter Item</label>
+            <input type="text" name="item" required>
+            <label for="date">Date of Entry</label>
+            <input type="date" name="date" required>
+            <label for="quality">Quality</label>
+            <input type="number" name="quality" required>
+            <label for="sell_in">Sell-in Days</label>
+            <input type="number" name="sell_in" required>
+            <input type="submit" value="Add Item" name="item date quality sell_in">
             <input type="reset" value="Delete Inventory">
             <input type="button" value="EOD" id="eod">
     `
-    addOptions(items, $form)
     $interface.append($form)
     addListeners($form)
-}
-
-function addOptions(items, $form) {
-    items.map(item => {
-        const $option = document.createElement("option")
-        $option.value = item.name
-        $option.textContent = `${item.name}`
-        $form.querySelector("select").append($option)
-    })
 }
 
 function addListeners($form) {
@@ -124,7 +119,6 @@ function addListeners($form) {
         saveItem(formData)
     })
     $form.addEventListener("reset", (event) => {
-        console.log("click")
         localStorage.clear()
         window.location.reload()
     })
