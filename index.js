@@ -100,7 +100,7 @@ function addInterface() {
             <label for="item">Enter Item</label>
             <input type="text" name="item" required>
             <label for="date">Date of Entry</label>
-            <input type="date" name="date" required>
+            <input type="number" name="date" required>
             <label for="quality">Quality</label>
             <input type="number" name="quality" required>
             <label for="sell_in">Sell-in Days</label>
@@ -128,6 +128,60 @@ function addListeners($form) {
     })
 }
 
+function eodCalculate() {
+    const savedInventory = localStorage.getItem("items")
+    const parsedInventory = JSON.parse(savedInventory)
+    let category = ""
+    parsedInventory.forEach(item => {
+        if (item.name.includes("conjured")) {
+
+        } else if (item.name.includes("sulfuras")) {
+
+        } else if (item.name.includes("aged brie")) {
+
+        } else if (item.name.includes("backstage passes")) {
+
+        } else {
+
+        }
+
+        switch (category) {
+            case ("conjured"):
+                console.log("got it")
+
+                break;
+            case "1":
+
+                break;
+            case "2":
+
+                break;
+            case "3":
+                break;
+            case "4":
+
+                break;
+            case "5":
+
+                break;
+            default:
+                break;
+        }
+        eodUpdateLocalStorage(parsedInventory)
+        refreshItems()
+    })
+}
+
+function eodUpdateLocalStorage(inventory) {
+    const itemsJSON = JSON.stringify(inventory)
+    localStorage.setItem("items", itemsJSON)
+}
+
+
+
+
+
+/*
 function reduceItem(item) {
     item.sell_in = item.sell_in - 1
     console.log(item.name.includes("Conjured"))
@@ -170,39 +224,4 @@ function reduceSpecialItem(item) {
             break;
     }
 }
-
-function eodCalculate() {
-    const savedInventory = localStorage.getItem("items")
-    const parsedInventory = JSON.parse(savedInventory)
-    // go through inventory master list and apply changes to each item
-    parsedInventory.forEach(item => {
-        switch (item.id) {
-            case "0":
-                reduceItem(item)
-                break;
-            case "1":
-                reduceSpecialItem(item)
-                break;
-            case "2":
-                reduceItem(item)
-                break;
-            case "3":
-                break;
-            case "4":
-                reduceSpecialItem(item)
-                break;
-            case "5":
-                reduceItem(item)
-                break;
-            default:
-                break;
-        }
-        eodUpdateLocalStorage(parsedInventory)
-        refreshItems()
-    })
-}
-
-function eodUpdateLocalStorage(inventory) {
-    const itemsJSON = JSON.stringify(inventory)
-    localStorage.setItem("items", itemsJSON)
-}
+*/

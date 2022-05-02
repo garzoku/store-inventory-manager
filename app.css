@@ -51,3 +51,9 @@ td {
 tbody>tr td:nth-child(1) {
     min-width: 100px;
 }
+
+form input {
+    display: flex;
+    margin: auto;
+    margin-bottom: 6px;
+}
