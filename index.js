@@ -29,7 +29,6 @@ function createTable() {
 `
     $main.append($app)
 }
-
 function addItemToList(item) {
     let selectedItem = item.get("item")
     let selectedDate = item.get("date")
@@ -57,12 +56,10 @@ function addItemToList(item) {
         inventoryItems.push(inventoryItem)
     }
 }
-
 function saveItem(item) {
     addItemToList(item)
     updateLocalStorage()
 }
-
 function updateLocalStorage() {
     if (localStorage.length > 0) {
         const savedInventory = localStorage.getItem("items")
@@ -75,7 +72,6 @@ function updateLocalStorage() {
         localStorage.setItem("items", itemsJSON)
     }
 }
-
 function refreshItems() {
     const savedInventory = localStorage.getItem("items")
     const parsedInventory = JSON.parse(savedInventory)
@@ -97,8 +93,6 @@ function refreshItems() {
         })
     }
 }
-
-
 function addInterface() {
     const $app = document.querySelector("#app")
     const $interface = document.querySelector("#interface")
@@ -106,7 +100,7 @@ function addInterface() {
     $form1.id = "form-1"
     $form1.innerHTML = `
             <label for="item">Enter Item</label>
-            <input type="text" name="item" value="conjured vest" required>
+            <input type="text" name="item" required>
             <label for="date">Date of Entry</label>
             <input type="date" name="date" required>
             <label for="quality">Quality</label>
@@ -196,9 +190,9 @@ function reduceItem(item) {
             item.sell_in = item.sell_in - 1
             if (item.sell_in <= 10 && item.sell_in > 5) {
                 item.quality = item.quality + 2
-            } else if (item.sell_in <= 5 && item.sell_in >= 0) {
+            } else if (item.sell_in <= 5 && item.sell_in > 0) {
                 item.quality = item.quality + 3
-            } else if (item.sell_in < 0) {
+            } else if (item.sell_in <= 0) {
                 item.quality = 0
             } else {
                 item.quality = item.quality + 1
@@ -245,49 +239,3 @@ function getTimeInDays(dateEntered, currentDate) {
     let differenceInDays = differenceInTime / (1000 * 3600 * 24);
     return differenceInDays
 }
-
-
-/*
-function reduceItem(item) {
-    item.sell_in = item.sell_in - 1
-    console.log(item.name.includes("Conjured"))
-    if (!item.name.includes("conjured") && !item.name.includes("Conjured")) {
-        if (item.sell_in < 0 && item.quality > 0) {
-            item.quality = item.quality - 2
-        } else if (item.quality > 0 && item.quality < 50) {
-            item.quality = item.quality - 1
-        }
-    } else {
-        if (item.sell_in < 0 && item.quality > 0) {
-            item.quality = item.quality - 4
-        } else if (item.quality > 0) {
-            item.quality = item.quality - 2
-        }
-    }
-}
-
-function reduceSpecialItem(item) {
-    switch (item.id) {
-        case "1":
-            item.sell_in = item.sell_in - 1
-            if (item.quality < 50) {
-                item.quality = item.quality + 1
-            }
-            break;
-        case "4":
-            item.sell_in = item.sell_in - 1
-            if (item.sell_in <= 10 && item.sell_in > 5 && item.quality <= 48) {
-                item.quality = item.quality + 2
-            } else if (item.sell_in <= 5 && item.sell_in >= 0 && item.quality <= 47) {
-                item.quality = item.quality + 3
-            } else if (item.sell_in < 0) {
-                item.quality = item.quality * 0
-            } else {
-                item.quality = item.quality + 1
-            }
-            break;
-        default:
-            break;
-    }
-}
-*/
